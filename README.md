@@ -1,11 +1,19 @@
-# Validator Docs
+# 📌 Validator Docs
 
 Este pacote foi inspirado em outros dois pacotes, mas foi criado pela necessidade de uma customização melhor nas messages de validação.
 
 - [geekcom - ValidatorDocs](https://github.com/geekcom/validator-docs)
 - [LaravelLegends - PtBrValidator](https://github.com/LaravelLegends/pt-br-validator)
 
-### 🔧 Customização
+### 🔧 Instalação
+
+Para fazer a instalação do pacote, rode o comando:
+
+```bash
+    composer require jp-system/validator-docs
+```
+
+### 📦 Customização
 
 Nesse pacote você pode publicar as messages de validação e customizá-las, usando o comando:
 
