@@ -13,4 +13,7 @@ return [
     |
     */
 
+    'cpf' => 'O campo :attribute não é um CPF válido.',
+    'cnpj' => 'O campo :attribute não é um CNPJ válido.',
+
 ];

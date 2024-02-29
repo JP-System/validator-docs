@@ -4,7 +4,15 @@ namespace ValidatorDocs;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use ValidatorDocs\Rules as Rules;
+use ValidatorDocs\Support\Macros;
 
+/**
+ * This pack was inspired by these packs:
+ *
+ * @see https://github.com/geekcom/validator-docs
+ * @see https://github.com/LaravelLegends/pt-br-validator
+ */
 class ServiceProvider extends LaravelServiceProvider
 {
     /**
@@ -20,9 +28,27 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function boot(): void
     {
+        Macros::register();
+
         $rules = $this->getRules();
 
-        dd($rules->toArray());
+        $rules->each(function ($class, $name) {
+            $rule = new $class;
+
+            $extension = static function ($attribute, $value) use ($rule) {
+                return $rule->passes($attribute, $value);
+            };
+
+            $this->app['validator']->extend($name, $extension, $rule->message());
+        });
+    }
+
+    /**
+     * Get the file path in the src directory.
+     */
+    private function srcDir(string $path): string
+    {
+        return __DIR__."/{$path}";
     }
 
     /**
@@ -30,9 +56,9 @@ class ServiceProvider extends LaravelServiceProvider
      */
     private function registerTranslations(): void
     {
-        $this->loadTranslationsFrom(__DIR__.'/lang', 'validator-docs');
+        $this->loadTranslationsFrom($this->srcDir('lang'), 'docs');
 
-        $this->publishes([__DIR__.'/lang' => $this->app->langPath('vendor/validator-docs')], 'validator-docs.lang');
+        $this->publishes([$this->srcDir('lang') => $this->app->langPath()], 'docs');
     }
 
     /**
@@ -41,7 +67,8 @@ class ServiceProvider extends LaravelServiceProvider
     private function getRules(): Collection
     {
         return collect([
-            //
+            'cpf' => Rules\CPF::class,
+            'cnpj' => Rules\CNPJ::class,
         ]);
     }
 }
