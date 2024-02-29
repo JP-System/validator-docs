@@ -6,6 +6,12 @@ use Tests\TestCase;
 uses(TestCase::class);
 
 /**
+ * -------------------------------------
+ * Rules
+ * -------------------------------------
+ */
+
+/**
  * CellPhone
  */
 test('it_should_check_cellphone_rule', function () {
@@ -204,144 +210,6 @@ test('it_should_check_cpf_or_cnpj_rule', function () {
 });
 
 /**
- * Format CEP
- */
-test('it_should_check_format_cep_rule', function () {
-    $values1 = collect(['32400-000', '32.400-000', '07.550-000', '30.150-150']);
-
-    $values1->each(function ($value) {
-        $validator = Validator::make(
-            ['value' => $value],
-            ['value' => 'format_cep']
-        );
-
-        expect($validator->passes())->toBeTrue();
-    });
-
-    $values2 = collect(['32400.000', '32.400-0000', '0.400-000', '300.40-000', '300.400-000']);
-
-    $values2->each(function ($value) {
-        $validator = Validator::make(
-            ['value' => $value],
-            ['value' => 'format_cep']
-        );
-
-        expect($validator->fails())->toBeTrue();
-    });
-});
-
-/**
- * Format CNPJ
- */
-test('it_should_check_format_cnpj_rule', function () {
-    $correct = Validator::make(
-        ['value' => '53.084.587/0001-20'],
-        ['value' => 'format_cnpj']
-    );
-
-    $incorrect = Validator::make(
-        ['value' => '51.084.587/000120'],
-        ['value' => 'format_cnpj']
-    );
-
-    expect($correct->passes())->toBeTrue();
-
-    expect($incorrect->fails())->toBeTrue();
-});
-
-/**
- * Format CPF
- */
-test('it_should_check_format_cpf_rule', function () {
-    $correct = Validator::make(
-        ['value' => '094.050.986-59'],
-        ['value' => 'format_cpf']
-    );
-
-    $incorrect = Validator::make(
-        ['value' => '094.050.986-591'],
-        ['value' => 'format_cpf']
-    );
-
-    expect($correct->passes())->toBeTrue();
-
-    expect($incorrect->fails())->toBeTrue();
-});
-
-/**
- * Format CPF or CNPJ
- */
-test('it_should_check_format_cpf_or_cnpj_rule', function () {
-    $values1 = collect(['981.366.228-09', '000.000.000-00', '56.611.605/0001-73']);
-
-    $values1->each(function ($value) {
-        $validator = Validator::make(
-            ['value' => $value],
-            ['value' => 'format_cpf_or_cnpj']
-        );
-
-        expect($validator->passes())->toBeTrue();
-    });
-
-    $values2 = collect(['0000.366.228-09', '11.6211.605/0001-73', '22851807000127']);
-
-    $values2->each(function ($value) {
-        $validator = Validator::make(
-            ['value' => $value],
-            ['value' => 'format_cpf_or_cnpj']
-        );
-
-        expect($validator->fails())->toBeTrue();
-    });
-});
-
-/**
- * Format PIS
- */
-test('it_should_check_format_pis_rule', function () {
-    $correct = Validator::make(
-        ['value' => '276.96730.83-0'],
-        ['value' => 'format_pis']
-    );
-
-    $incorrect = Validator::make(
-        ['value' => '276.96730.830'],
-        ['value' => 'format_pis']
-    );
-
-    expect($correct->passes())->toBeTrue();
-
-    expect($incorrect->fails())->toBeTrue();
-});
-
-/**
- * Format Vehicle Plate
- */
-test('it_should_check_format_vehicle_plate_rule', function () {
-    $values1 = collect(['ABC-1234', 'abc-1234', 'ABC1234', 'aBc1234', 'abc1234', 'BEE4R22', 'FUM-0B05', 'FUM-5L58']);
-
-    $values1->each(function ($value) {
-        $validator = Validator::make(
-            ['value' => $value],
-            ['value' => 'format_vehicle_plate']
-        );
-
-        expect($validator->passes())->toBeTrue();
-    });
-
-    $values2 = collect(['a2c-1234', 'abc-12ed', 'abc 1234', 'ãBC1234', 'ABCD1234', 'ABC12345', 'ab1234', 'ab123a4', 'abc+1234']);
-
-    $values2->each(function ($value) {
-        $validator = Validator::make(
-            ['value' => $value],
-            ['value' => 'format_vehicle_plate']
-        );
-
-        expect($validator->fails())->toBeTrue();
-    });
-});
-
-/**
  * PIS
  */
 test('it_should_check_pis_rule', function () {
@@ -446,6 +314,150 @@ test('it_should_check_uf_rule', function () {
         $validator = Validator::make(
             ['value' => $value],
             ['value' => 'uf']
+        );
+
+        expect($validator->fails())->toBeTrue();
+    });
+});
+
+/**
+ * -------------------------------------
+ * Formats
+ * -------------------------------------
+ */
+
+/**
+ * CEP
+ */
+test('it_should_check_format_cep_rule', function () {
+    $values1 = collect(['32400-000', '32.400-000', '07.550-000', '30.150-150']);
+
+    $values1->each(function ($value) {
+        $validator = Validator::make(
+            ['value' => $value],
+            ['value' => 'format_cep']
+        );
+
+        expect($validator->passes())->toBeTrue();
+    });
+
+    $values2 = collect(['32400.000', '32.400-0000', '0.400-000', '300.40-000', '300.400-000']);
+
+    $values2->each(function ($value) {
+        $validator = Validator::make(
+            ['value' => $value],
+            ['value' => 'format_cep']
+        );
+
+        expect($validator->fails())->toBeTrue();
+    });
+});
+
+/**
+ * CNPJ
+ */
+test('it_should_check_format_cnpj_rule', function () {
+    $correct = Validator::make(
+        ['value' => '53.084.587/0001-20'],
+        ['value' => 'format_cnpj']
+    );
+
+    $incorrect = Validator::make(
+        ['value' => '51.084.587/000120'],
+        ['value' => 'format_cnpj']
+    );
+
+    expect($correct->passes())->toBeTrue();
+
+    expect($incorrect->fails())->toBeTrue();
+});
+
+/**
+ * CPF
+ */
+test('it_should_check_format_cpf_rule', function () {
+    $correct = Validator::make(
+        ['value' => '094.050.986-59'],
+        ['value' => 'format_cpf']
+    );
+
+    $incorrect = Validator::make(
+        ['value' => '094.050.986-591'],
+        ['value' => 'format_cpf']
+    );
+
+    expect($correct->passes())->toBeTrue();
+
+    expect($incorrect->fails())->toBeTrue();
+});
+
+/**
+ * CPF or CNPJ
+ */
+test('it_should_check_format_cpf_or_cnpj_rule', function () {
+    $values1 = collect(['981.366.228-09', '000.000.000-00', '56.611.605/0001-73']);
+
+    $values1->each(function ($value) {
+        $validator = Validator::make(
+            ['value' => $value],
+            ['value' => 'format_cpf_or_cnpj']
+        );
+
+        expect($validator->passes())->toBeTrue();
+    });
+
+    $values2 = collect(['0000.366.228-09', '11.6211.605/0001-73', '22851807000127']);
+
+    $values2->each(function ($value) {
+        $validator = Validator::make(
+            ['value' => $value],
+            ['value' => 'format_cpf_or_cnpj']
+        );
+
+        expect($validator->fails())->toBeTrue();
+    });
+});
+
+/**
+ * PIS
+ */
+test('it_should_check_format_pis_rule', function () {
+    $correct = Validator::make(
+        ['value' => '276.96730.83-0'],
+        ['value' => 'format_pis']
+    );
+
+    $incorrect = Validator::make(
+        ['value' => '276.96730.830'],
+        ['value' => 'format_pis']
+    );
+
+    expect($correct->passes())->toBeTrue();
+
+    expect($incorrect->fails())->toBeTrue();
+});
+
+/**
+ * Vehicle Plate
+ */
+test('it_should_check_format_vehicle_plate_rule', function () {
+    $values1 = collect(['ABC-1234', 'abc-1234', 'ABC1234', 'aBc1234', 'abc1234', 'BEE4R22', 'FUM-0B05', 'FUM-5L58']);
+
+    $values1->each(function ($value) {
+        $validator = Validator::make(
+            ['value' => $value],
+            ['value' => 'format_vehicle_plate']
+        );
+
+        expect($validator->passes())->toBeTrue();
+    });
+
+    $values2 = collect(['a2c-1234', 'abc-12ed', 'abc 1234', 'ãBC1234', 'ABCD1234', 'ABC12345', 'ab1234', 'ab123a4', 'abc+1234']);
+
+    $values2->each(function ($value) {
+        $validator = Validator::make(
+            ['value' => $value],
+            ['value' => 'format_vehicle_plate']
         );
 
         expect($validator->fails())->toBeTrue();

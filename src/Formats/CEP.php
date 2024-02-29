@@ -1,18 +1,18 @@
 <?php
 
-namespace ValidatorDocs\Rules;
+namespace ValidatorDocs\Formats;
 
 use Illuminate\Contracts\Validation\Rule;
-use ValidatorDocs\Support\Helpers;
+use ValidatorDocs\Helpers;
 
-class FormatPIS implements Rule
+class CEP implements Rule
 {
     /**
      * Determine if the validation rule passes.
      */
     public function passes($attribute, $value): bool
     {
-        return preg_match('/^\d{3}\.\d{5}\.\d{2}-\d{1}$/', $value) > 0;
+        return preg_match('/^\d{2}\.?\d{3}-\d{3}$/', $value) > 0;
     }
 
     /**
@@ -20,6 +20,6 @@ class FormatPIS implements Rule
      */
     public function message(): string
     {
-        return Helpers::getMessage('format_pis');
+        return Helpers::getMessage('format_cep');
     }
 }

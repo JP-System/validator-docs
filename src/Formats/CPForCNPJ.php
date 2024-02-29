@@ -1,18 +1,18 @@
 <?php
 
-namespace ValidatorDocs\Rules;
+namespace ValidatorDocs\Formats;
 
 use Illuminate\Contracts\Validation\Rule;
-use ValidatorDocs\Support\Helpers;
+use ValidatorDocs\Helpers;
 
-class FormatCEP implements Rule
+class CPForCNPJ implements Rule
 {
     /**
      * Determine if the validation rule passes.
      */
     public function passes($attribute, $value): bool
     {
-        return preg_match('/^\d{2}\.?\d{3}-\d{3}$/', $value) > 0;
+        return (new CPF)->passes($attribute, $value) || (new CNPJ)->passes($attribute, $value);
     }
 
     /**
@@ -20,6 +20,6 @@ class FormatCEP implements Rule
      */
     public function message(): string
     {
-        return Helpers::getMessage('format_cep');
+        return Helpers::getMessage('format_cpf_or_cnpj');
     }
 }

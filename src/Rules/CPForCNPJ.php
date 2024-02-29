@@ -3,7 +3,7 @@
 namespace ValidatorDocs\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use ValidatorDocs\Support\Helpers;
+use ValidatorDocs\Helpers;
 
 class CPForCNPJ implements Rule
 {

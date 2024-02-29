@@ -1,6 +1,6 @@
 <?php
 
-namespace ValidatorDocs\Support;
+namespace ValidatorDocs;
 
 use Illuminate\Translation\Translator;
 

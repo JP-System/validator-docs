@@ -4,7 +4,7 @@ namespace ValidatorDocs\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Str;
-use ValidatorDocs\Support\Helpers;
+use ValidatorDocs\Helpers;
 
 class CPF implements Rule
 {
