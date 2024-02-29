@@ -13,8 +13,22 @@ class CNPJ implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        $c = Str::onlyNumbers($value);
+        return $this->checkCNPJ(Str::onlyNumbers($value));
+    }
 
+    /**
+     * Get the validation error message.
+     */
+    public function message(): string
+    {
+        return Helpers::getMessage('cnpj');
+    }
+
+    /**
+     * Determine if the CNPJ is valid.
+     */
+    private function checkCNPJ(mixed $c): bool
+    {
         $b = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
 
         if (strlen($c) != 14) {
@@ -36,13 +50,5 @@ class CNPJ implements Rule
         }
 
         return true;
-    }
-
-    /**
-     * Get the validation error message.
-     */
-    public function message(): string
-    {
-        return Helpers::getMessage('cnpj');
     }
 }

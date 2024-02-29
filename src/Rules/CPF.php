@@ -13,8 +13,22 @@ class CPF implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        $c = Str::onlyNumbers($value);
+        return $this->checkCPF(Str::onlyNumbers($value));
+    }
 
+    /**
+     * Get the validation error message.
+     */
+    public function message(): string
+    {
+        return Helpers::getMessage('cpf');
+    }
+
+    /**
+     * Determine if the CPF is valid.
+     */
+    private function checkCPF(mixed $c): bool
+    {
         if (strlen($c) != 11 || preg_match("/^{$c[0]}{11}$/", $c)) {
             return false;
         }
@@ -32,13 +46,5 @@ class CPF implements Rule
         }
 
         return true;
-    }
-
-    /**
-     * Get the validation error message.
-     */
-    public function message(): string
-    {
-        return Helpers::getMessage('cpf');
     }
 }

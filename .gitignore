@@ -1,1 +1,9 @@
-/vendor/
+/.phpunit.cache
+/vendor
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+/.fleet
+/.idea
+/.vscode
