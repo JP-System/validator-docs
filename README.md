@@ -13,7 +13,7 @@ Nesse pacote você pode publicar as messages de validação e customizá-las, us
     php artisan vendor:publish --tag="docs"
 ```
 
-Caso não queira publicar o arquivo de tradução, você poderá criar suas próprias mensagens dentro do arquivo validation.php:
+Caso não queira publicar o arquivo de tradução, você poderá criar suas próprias mensagens dentro do arquivo `validation.php`:
 
 ```php
     'docs' => [
