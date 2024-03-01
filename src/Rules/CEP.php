@@ -1,18 +1,18 @@
 <?php
 
-namespace ValidatorDocs\Formats;
+namespace ValidatorDocs\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use ValidatorDocs\Helpers;
+use ValidatorDocs\Support\Helpers;
 
-class VehiclePlate implements Rule
+class CEP implements Rule
 {
     /**
      * Determine if the validation rule passes.
      */
     public function passes($attribute, $value): bool
     {
-        return preg_match('/^[a-zA-Z]{3}\-?[0-9][0-9a-zA-Z][0-9]{2}$/', $value) > 0;
+        return preg_match('/^\d{2}\.?\d{3}-\d{3}$/', $value) > 0;
     }
 
     /**
@@ -20,6 +20,6 @@ class VehiclePlate implements Rule
      */
     public function message(): string
     {
-        return Helpers::getMessage('format_vehicle_plate');
+        return Helpers::getMessage('format_cep');
     }
 }

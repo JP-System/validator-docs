@@ -3,7 +3,7 @@
 namespace ValidatorDocs\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use ValidatorDocs\Helpers;
+use ValidatorDocs\Support\Helpers;
 
 class CellPhoneWithCode implements Rule
 {

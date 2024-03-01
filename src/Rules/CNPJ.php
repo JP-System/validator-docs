@@ -4,16 +4,24 @@ namespace ValidatorDocs\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Str;
-use ValidatorDocs\Helpers;
+use ValidatorDocs\Formats\CNPJ as FormatsCNPJ;
+use ValidatorDocs\Support\Helpers;
+use ValidatorDocs\Traits\WithFormat;
 
 class CNPJ implements Rule
 {
+    use WithFormat;
+
     /**
      * Determine if the validation rule passes.
      */
     public function passes($attribute, $value): bool
     {
-        return $this->checkCNPJ(Str::onlyNumbers($value));
+        if (! $this->format) {
+            return $this->checkCNPJ(Str::onlyNumbers($value));
+        }
+
+        return (new FormatsCNPJ)->formatted($value) && $this->checkCNPJ(Str::onlyNumbers($value));
     }
 
     /**

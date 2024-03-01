@@ -4,7 +4,7 @@ namespace ValidatorDocs\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use ValidatorDocs\Enum\StateEnum;
-use ValidatorDocs\Helpers;
+use ValidatorDocs\Support\Helpers;
 
 class UF implements Rule
 {

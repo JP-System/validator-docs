@@ -4,9 +4,8 @@ namespace ValidatorDocs;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
-use Illuminate\Support\Str;
-use ValidatorDocs\Formats as Formats;
 use ValidatorDocs\Rules as Rules;
+use ValidatorDocs\Support\Macros;
 
 /**
  * This pack was inspired by these packs:
@@ -29,20 +28,20 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function boot(): void
     {
+        Macros::register();
+
         $rules = $this->getRules();
 
         $rules->each(function ($class, $name) {
             $rule = new $class;
 
-            $extension = static function ($attribute, $value) use ($rule) {
+            $extension = static function ($attribute, $value, $parameters) use ($rule) {
+                $rule = static::getRule($rule, $parameters);
+
                 return $rule->passes($attribute, $value);
             };
 
             $this->app['validator']->extend($name, $extension, $rule->message());
-        });
-
-        Str::macro('onlyNumbers', function (mixed $value): mixed {
-            return preg_replace('/[^0-9]/', '', $value);
         });
     }
 
@@ -52,6 +51,14 @@ class ServiceProvider extends LaravelServiceProvider
     private function srcDir(string $path): string
     {
         return __DIR__."/{$path}";
+    }
+
+    /**
+     * Get the Rule Instance.
+     */
+    private static function getRule($rule, $parameters): mixed
+    {
+        return property_exists($rule, 'format') ? $rule->format(in_array('format', $parameters)) : $rule;
     }
 
     /**
@@ -70,8 +77,8 @@ class ServiceProvider extends LaravelServiceProvider
     private function getRules(): Collection
     {
         return collect([
-            // Rules
             'uf' => Rules\UF::class,
+            'cep' => Rules\CEP::class,
             'cnh' => Rules\CNH::class,
             'cns' => Rules\CNS::class,
             'cpf' => Rules\CPF::class,
@@ -80,18 +87,12 @@ class ServiceProvider extends LaravelServiceProvider
             'cellphone' => Rules\CellPhone::class,
             'telephone' => Rules\TelePhone::class,
             'cpf_or_cnpj' => Rules\CPForCNPJ::class,
+            'vehicle_plate' => Rules\VehiclePlate::class,
             'cellphone_with_ddd' => Rules\CellPhoneWithDDD::class,
             'telephone_with_ddd' => Rules\TelePhoneWithDDD::class,
             'cellphone_with_code' => Rules\CellPhoneWithCode::class,
             'telephone_with_code' => Rules\TelePhoneWithCode::class,
             'cellphone_with_code_no_mask' => Rules\CellPhoneWithCodeNoMask::class,
-            // Formats
-            'format_cep' => Formats\CEP::class,
-            'format_cpf' => Formats\CPF::class,
-            'format_pis' => Formats\PIS::class,
-            'format_cnpj' => Formats\CNPJ::class,
-            'format_cpf_or_cnpj' => Formats\CPForCNPJ::class,
-            'format_vehicle_plate' => Formats\VehiclePlate::class,
         ]);
     }
 }
