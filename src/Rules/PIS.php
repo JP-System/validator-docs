@@ -4,16 +4,24 @@ namespace ValidatorDocs\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Str;
-use ValidatorDocs\Helpers;
+use ValidatorDocs\Formats\PIS as FormatsPIS;
+use ValidatorDocs\Support\Helpers;
+use ValidatorDocs\Traits\WithFormat;
 
 class PIS implements Rule
 {
+    use WithFormat;
+
     /**
      * Determine if the validation rule passes.
      */
     public function passes($attribute, $value): bool
     {
-        return $this->checkPIS(Str::onlyNumbers($value));
+        if ($this->format === false) {
+            return $this->checkPIS(Str::onlyNumbers($value));
+        }
+
+        return (new FormatsPIS)->formatted($value) && $this->checkPIS(Str::onlyNumbers($value));
     }
 
     /**

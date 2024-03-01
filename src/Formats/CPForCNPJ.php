@@ -2,24 +2,15 @@
 
 namespace ValidatorDocs\Formats;
 
-use Illuminate\Contracts\Validation\Rule;
-use ValidatorDocs\Helpers;
+use ValidatorDocs\Contracts\Formatted;
 
-class CPForCNPJ implements Rule
+class CPForCNPJ implements Formatted
 {
     /**
-     * Determine if the validation rule passes.
+     * Check if the value is formatted.
      */
-    public function passes($attribute, $value): bool
+    public function formatted(string $value): bool
     {
-        return (new CPF)->passes($attribute, $value) || (new CNPJ)->passes($attribute, $value);
-    }
-
-    /**
-     * Get the validation error message.
-     */
-    public function message(): string
-    {
-        return Helpers::getMessage('format_cpf_or_cnpj');
+        return (new CPF)->formatted($value) || (new CNPJ)->formatted($value);
     }
 }

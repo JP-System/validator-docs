@@ -2,24 +2,15 @@
 
 namespace ValidatorDocs\Formats;
 
-use Illuminate\Contracts\Validation\Rule;
-use ValidatorDocs\Helpers;
+use ValidatorDocs\Contracts\Formatted;
 
-class CPF implements Rule
+class CPF implements Formatted
 {
     /**
-     * Determine if the validation rule passes.
+     * Check if the value is formatted.
      */
-    public function passes($attribute, $value): bool
+    public function formatted(string $value): bool
     {
         return preg_match('/^\d{3}\.\d{3}\.\d{3}-\d{2}$/', $value) > 0;
-    }
-
-    /**
-     * Get the validation error message.
-     */
-    public function message(): string
-    {
-        return Helpers::getMessage('format_cpf');
     }
 }

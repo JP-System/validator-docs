@@ -1,9 +1,9 @@
 <?php
 
-namespace ValidatorDocs\Formats;
+namespace ValidatorDocs\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use ValidatorDocs\Helpers;
+use ValidatorDocs\Support\Helpers;
 
 class VehiclePlate implements Rule
 {

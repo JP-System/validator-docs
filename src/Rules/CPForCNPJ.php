@@ -3,16 +3,19 @@
 namespace ValidatorDocs\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use ValidatorDocs\Helpers;
+use ValidatorDocs\Support\Helpers;
+use ValidatorDocs\Traits\WithFormat;
 
 class CPForCNPJ implements Rule
 {
+    use WithFormat;
+
     /**
      * Determine if the validation rule passes.
      */
     public function passes($attribute, $value): bool
     {
-        return (new CPF)->passes($attribute, $value) || (new CNPJ)->passes($attribute, $value);
+        return (new CPF)->format($this->format)->passes($attribute, $value) || (new CNPJ)->format($this->format)->passes($attribute, $value);
     }
 
     /**
