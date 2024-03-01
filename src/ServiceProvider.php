@@ -68,7 +68,7 @@ class ServiceProvider extends LaravelServiceProvider
     {
         $this->loadTranslationsFrom($this->srcDir('lang'), 'docs');
 
-        $this->publishes([$this->srcDir('lang') => $this->app->langPath()], 'docs');
+        $this->publishes([$this->srcDir('lang') => $this->app->langPath()], 'validator-docs');
     }
 
     /**
