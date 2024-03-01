@@ -17,7 +17,7 @@ class CPF implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        if ($this->format === false) {
+        if (! $this->format) {
             return $this->checkCPF(Str::onlyNumbers($value));
         }
 
