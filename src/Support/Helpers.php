@@ -11,7 +11,7 @@ class Helpers
      */
     public static function getMessage(string $key): string
     {
-        /** @var Translator $translator * */
+        /** @var Translator $translator **/
         $translator = app('translator');
 
         if ($translator->has("docs.{$key}")) {
