@@ -50,7 +50,7 @@ class ServiceProvider extends LaravelServiceProvider
      */
     private function srcDir(string $path): string
     {
-        return __DIR__."/{$path}";
+        return __DIR__."/../{$path}";
     }
 
     /**
