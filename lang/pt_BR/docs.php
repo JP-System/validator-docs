@@ -22,6 +22,7 @@ return [
     'cnpj' => 'O campo :attribute não é um CNPJ válido.',
     'cellphone' => 'O campo :attribute não é um celular válido.',
     'telephone' => 'O campo :attribute não é um telefone válido.',
+    'money' => 'O campo :attribute não é um valor monetário válido.',
     'cpf_or_cnpj' => 'O campo :attribute não é um CPF ou CNPJ válido.',
     'vehicle_plate' => 'O campo :attribute não é uma Placa de Veículo válida.',
     'cellphone_with_ddd' => 'O campo :attribute não é um celular com DDD válido.',

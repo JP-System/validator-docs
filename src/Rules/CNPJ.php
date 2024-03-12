@@ -59,4 +59,12 @@ class CNPJ implements Rule
 
         return true;
     }
+
+    /**
+     * Check if the parameters has the format.
+     */
+    private function hasFormat(): bool
+    {
+        return in_array('format', $this->parameters, true);
+    }
 }

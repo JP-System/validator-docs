@@ -92,6 +92,7 @@ class ServiceProvider extends LaravelServiceProvider
             'cpf' => Rules\CPF::class,
             'pis' => Rules\PIS::class,
             'cnpj' => Rules\CNPJ::class,
+            'money' => Rules\Money::class,
             'cellphone' => Rules\CellPhone::class,
             'telephone' => Rules\TelePhone::class,
             'cpf_or_cnpj' => Rules\CPForCNPJ::class,

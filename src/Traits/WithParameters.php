@@ -10,15 +10,17 @@ trait WithParameters
     protected array $parameters = [];
 
     /**
-     * Check if the parameters has the format.
+     * Set the format in the parameters.
      */
-    protected function hasFormat(): bool
+    public function format(bool $format = true): static
     {
-        return in_array('format', $this->parameters, true);
+        $this->parameters = collect($this->parameters)->when($format, fn ($c) => $c->push('format'))->toArray();
+
+        return $this;
     }
 
     /**
-     * Set the format in the instance.
+     * Set the parameters in the instance.
      */
     public function parameters(array $parameters = []): static
     {

@@ -41,6 +41,7 @@ Caso não queira publicar o arquivo de tradução, você poderá criar suas pró
 | cpf                 | **`999.999.999-99`**                                                                   | **`true`**          |
 | pis                 | **`999.99999.99-9`**                                                                   | **`true`**          |
 | cnpj                | **`99.999.999/9999-99`**                                                               | **`true`**          |
+| money               | **`99.999,99`**, **`99,999.99`**                                                       | **`false`**         |
 | cellphone           | **`99999-9999`**, **`9999-9999`**                                                      | **`false`**         |
 | telephone           | **`9999-9999`**                                                                        | **`false`**         |
 | cpf_or_cnpj         | **`999.999.999-99`**, **`99.999.999/9999-99`**                                         | **`true`**          |
@@ -82,6 +83,21 @@ As regras em que existe a opção de formatação, mas é opcional, podemos apli
         'required',
         'string',
         (new CPForCNPJ)->format(),
+    ],
+```
+
+A regra para dinheiro aceita dois parâmetros, a moeda e a localicação. Utilizamos a classe de suporte Number do próprio Laravel:
+
+```php
+    'money_1' => [
+        'required',
+        'string',
+        'money:BRL,pt_BR', // default
+    ],
+    'money_2' => [
+        'required',
+        'string',
+        Rule::money()->parameters(['USD', 'en_US']),
     ],
 ```
 

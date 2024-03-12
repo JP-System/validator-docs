@@ -237,6 +237,33 @@ test('it_should_check_cpf_or_cnpj_rule', function () {
 });
 
 /**
+ * Money
+ */
+test('it_should_check_money_rule', function () {
+    $values1 = collect(['13.521,55', '1.521,55', '521,55', '21,55', '1,55', '1,03', '0,02']);
+
+    $values1->each(function ($value) {
+        $validator = Validator::make(
+            ['value' => $value],
+            ['value' => 'money:BRL,pt_BR']
+        );
+
+        expect($validator->passes())->toBeTrue();
+    });
+
+    $values2 = collect(['13 521,55', '1.521 55', '521.55', '21.55', '1.55', '1.03', '0.02']);
+
+    $values2->each(function ($value) {
+        $validator = Validator::make(
+            ['value' => $value],
+            ['value' => 'money:BRL,pt_BR']
+        );
+
+        expect($validator->fails())->toBeTrue();
+    });
+});
+
+/**
  * PIS
  */
 test('it_should_check_pis_rule', function () {

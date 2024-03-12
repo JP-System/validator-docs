@@ -13,8 +13,15 @@ class Macros
      */
     public static function register(): void
     {
+        /**
+         * String
+         */
         Str::macro('onlyNumbers', function (mixed $value): mixed {
             return preg_replace('/[^0-9]/', '', $value);
+        });
+
+        Str::macro('money', function (mixed $value): mixed {
+            return ltrim(preg_replace('/[^0-9]/', '', $value), '0');
         });
 
         /**
@@ -46,6 +53,10 @@ class Macros
 
         Rule::macro('cnpj', function () {
             return new Rules\CNPJ();
+        });
+
+        Rule::macro('money', function () {
+            return new Rules\Money();
         });
 
         Rule::macro('cellphone', function () {

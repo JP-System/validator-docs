@@ -53,4 +53,12 @@ class PIS implements Rule
 
         return (int) $p[10] === ($mod < 2 ? 0 : 11 - $mod);
     }
+
+    /**
+     * Check if the parameters has the format.
+     */
+    private function hasFormat(): bool
+    {
+        return in_array('format', $this->parameters, true);
+    }
 }
