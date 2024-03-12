@@ -6,18 +6,18 @@ use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Str;
 use ValidatorDocs\Formats\CNPJ as FormatsCNPJ;
 use ValidatorDocs\Support\Helpers;
-use ValidatorDocs\Traits\WithFormat;
+use ValidatorDocs\Traits\WithParameters;
 
 class CNPJ implements Rule
 {
-    use WithFormat;
+    use WithParameters;
 
     /**
      * Determine if the validation rule passes.
      */
     public function passes($attribute, $value): bool
     {
-        if (! $this->format) {
+        if (! $this->hasFormat()) {
             return $this->checkCNPJ(Str::onlyNumbers($value));
         }
 
