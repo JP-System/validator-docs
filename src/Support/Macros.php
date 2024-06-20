@@ -24,6 +24,10 @@ class Macros
             return ltrim(preg_replace('/[^0-9]/', '', $value), '0');
         });
 
+        Str::macro('moneyValue', function (mixed $value): mixed {
+            return (int) self::money($value) / 100;
+        });
+
         /**
          * Rules
          */
