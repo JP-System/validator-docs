@@ -101,6 +101,18 @@ A regra para dinheiro aceita dois parâmetros, a moeda e a localicação. Utiliz
     ],
 ```
 
+Caso você precise verificar o formato do dinheiro conforme alguma regra em específica, você pode setar os callbacks no seu AppServiceProvider:
+
+```php
+    Money::setLocaleCallback(function ($default) {
+        return Auth::user()?->locale ?? $default;
+    });
+
+    Money::setCurrencyCallback(function ($default) {
+        return Auth::user()?->currency ?? $default;
+    });
+```
+
 Qualquer melhoria ou correção, poderá abrir um PR ou Issue.
 
 ## 🚀 Obrigado!
