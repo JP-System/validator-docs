@@ -21,10 +21,10 @@ class Macros
         });
 
         Str::macro('money', function (mixed $value): mixed {
-            return ltrim(preg_replace('/[^0-9]/', '', $value), '0');
+            return ltrim(self::onlyNumbers($value), '0');
         });
 
-        Str::macro('moneyValue', function (mixed $value): mixed {
+        Str::macro('moneyValue', function (mixed $value): float {
             return (int) self::money($value) / 100;
         });
 
