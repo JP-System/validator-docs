@@ -13,6 +13,16 @@ class Money implements Rule
     use WithParameters;
 
     /**
+     * The callback that should be used to validate the locale.
+     */
+    public static $localeCallback;
+
+    /**
+     * The callback that should be used to validate the currency.
+     */
+    public static $currencyCallback;
+
+    /**
      * Determine if the validation rule passes.
      */
     public function passes($attribute, $value): bool
@@ -29,35 +39,50 @@ class Money implements Rule
     }
 
     /**
+     * Set callback to get locale to be used in the validation rule.
+     */
+    public static function setLocaleCallback(callable $callback): void
+    {
+        static::$localeCallback = $callback;
+    }
+
+    /**
+     * Set callback to get currency to be used in the validation rule.
+     */
+    public static function setCurrencyCallback(callable $callback): void
+    {
+        static::$currencyCallback = $callback;
+    }
+
+    /**
      * Determine if the money is valid.
      */
     private function checkMoney(mixed $value): bool
     {
-        $params = $this->money();
+        $money = Str::moneyValue($value);
 
-        $money = $this->getCurrency($value);
-
-        $money = Number::currency($money, $params['currency'], $params['locale']);
+        $money = Number::currency($money, $this->getCurrency(), $this->getLocale());
 
         return Str::of($money)->contains($value);
     }
 
     /**
-     * Get the currency value.
+     * Get the locale from callback or parameters.
      */
-    private function getCurrency(mixed $value): float
+    private function getLocale(): mixed
     {
-        return (int) Str::money($value) / 100;
+        $default = data_get($this->parameters, '1');
+
+        return with($default, static::$localeCallback);
     }
 
     /**
-     * Get the money parameters.
+     * Get the currency from callback or parameters.
      */
-    private function money(): array
+    private function getCurrency(): mixed
     {
-        return [
-            'locale' => data_get($this->parameters, '1', 'pt_BR'),
-            'currency' => data_get($this->parameters, '0', 'BRL'),
-        ];
+        $default = data_get($this->parameters, '0', 'USD');
+
+        return with($default, static::$currencyCallback);
     }
 }
